@@ -100,12 +100,11 @@
 		var allTexts=[]
 		function submitText(){
 				var text=document.getElementById('getText').value
-				var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender": navigator.userAgent.toString().slice(0,7)}
+				var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender": navigator.productSub.toString()}
 				axios.post('https://texter-for-me.firebaseio.com/text.json',senddata).then(function(res){
 						document.getElementById('msgbox').innerHTML="Message Sent"
                         document.getElementById('getText').value=""
 						location.reload()
-						window.scrollTo(0,document.body.scrollHeight)
 				})
 		}
 		window.onload=getText()
@@ -129,6 +128,7 @@
 								elem2.innerHTML=allTexts[i].date + " " + allTexts[i].sender
 								document.getElementById('wrap-showtexts').appendChild(elem2)					
 					}
+					window.scrollTo(0,document.body.scrollHeight)
 				})
 		}
 </script>
