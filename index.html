@@ -104,6 +104,8 @@
 				axios.post('https://texter-for-me.firebaseio.com/text.json',senddata).then(function(res){
 						document.getElementById('msgbox').innerHTML="Message Sent"
                         document.getElementById('getText').value=""
+						location.reload()
+						window.scrollTo(0,document.body.scrollHeight)
 				})
 		}
 		window.onload=getText()
