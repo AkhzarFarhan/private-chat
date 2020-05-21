@@ -5,19 +5,19 @@
 <head>
 	<meta charset="utf-8">
 	<title>Private Chat</title>
-	<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+	<!-- <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet"> -->
+	<link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 	<style>
         body {
             background-color: black;
-            color: white;
+            color: #d3d3d3;
         }
 		.box{
             white-space: pre-wrap;
 			padding:10px;
-			font-family: 'Quicksand', sans-serif;
+			font-family: 'Varela Round', sans-serif;
 			margin: 5px 5px 5px 5px;
-			/*background-color: #353849; not so good color*/
-			border: 1px solid #3CC47A;
+			border: 1px solid #353849;
 			border-radius: 8px;
 			box-sizing: border-box;
 			-moz-box-sizing: border-box;
@@ -25,7 +25,7 @@
 		#wrap-showtexts{
 		}
 		.msgbox{
-			font-family: 'Quicksand', sans-serif;
+			font-family: 'Varela Round', sans-serif;
 			color:green;
 			text-align:center;
 			
@@ -47,10 +47,10 @@
 		}
 		#getText{
             white-space: pre-wrap;
-			font-family: 'Quicksand', sans-serif;
+			font-family: 'Varela Round', sans-serif;
 			width:95%;
 			border-radius:10px;
-			border-color: #3CC47A;
+			border-color: #353849;
 			padding:1%;
             background-color: black;
             color: white;
@@ -60,26 +60,26 @@
 			padding-right: 30px;
 			padding-top: 10px;
 			padding-bottom: 10px;
-			background-color: #3CC47A;
+			background-color: #353849;
 			color: white;
 			border-radius: 8px;
-			font-family: 'Quicksand', sans-serif;
+			font-family: 'Varela Round', sans-serif;
 			box-sizing: border-box;
 			-moz-box-sizing: border-box;
     	}
     	.copyright {
-    		font-family: 'Quicksand', sans-serif;
+    		font-family: 'Varela Round', sans-serif;
     		font-size: 8pt;
     		text-align-last: right;
     		padding-bottom: 10px;
-    		color: #3CC47A;
+    		color: #353849;
 		}
 		.date{
-    		font-family: 'Quicksand', sans-serif;
+    		font-family: 'Varela Round', sans-serif;
     		font-size: 8pt;
     		text-align-last: right;
     		padding-bottom: 5px;
-    		color: #3CC47A;			
+    		color: #d3d3d3;			
 		}
         textarea {
             white-space: pre-wrap;
@@ -91,8 +91,8 @@
     <div id="msgbox" class="msgbox"></div>
     <div id="wrap-input">
 		<textarea type="text" id="getText" placeholder="Enter your text"></textarea><br>
-		<div align="right">
-			<button OnClick="submitText()">Save</button>
+		<div align="right" style="padding: 10px;">
+			<button OnClick="submitText()">Send</button>
 		</div>
 	</div>
 	<!-- <div class="copyright">
