@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<head>
+	<meta charset="utf-8">
+	<title>Private Chat</title>
+	<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+	<style>
+        body {
+            background-color: black;
+            color: white;
+        }
+		.box{
+            white-space: pre-wrap;
+			padding:10px;
+			font-family: 'Quicksand', sans-serif;
+			margin: 5px 5px 5px 5px;
+			/*background-color: #353849;*/
+			border: 1px solid #3CC47A;
+			border-radius: 8px;
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+		}
+		#wrap-showtexts{
+		}
+		.msgbox{
+			font-family: 'Quicksand', sans-serif;
+			color:green;
+			text-align:center;
+			
+		}
+		#wrap-showtexts,.msgbox,#wrap-input{
+			margin:0 auto;	
+			padding:10px 0;
+			width:70vw;
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			overflow: hidden;
+		}
+		#wrap-input{
+		}
+		@media only screen and (max-width:6in){
+			#wrap-showtexts,.msgbox,#wrap-input{
+				width:97vw;
+			}
+		}
+		#getText{
+            white-space: pre-wrap;
+			font-family: 'Quicksand', sans-serif;
+			width:95%;
+			border-radius:10px;
+			border-color: #3CC47A;
+			padding:1%;
+            background-color: black;
+            color: white;
+		}
+		button{
+			padding: 7px;
+			background-color: #3CC47A;
+			color: white;
+			border-radius: 8px;
+			font-family: 'Quicksand', sans-serif;
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+    	}
+    	.copyright {
+    		font-family: 'Quicksand', sans-serif;
+    		font-size: 8pt;
+    		text-align-last: right;
+    		padding-bottom: 10px;
+    		color: #3CC47A;
+		}
+		.date{
+    		font-family: 'Quicksand', sans-serif;
+    		font-size: 8pt;
+    		text-align-last: right;
+    		padding-bottom: 5px;
+    		color: #3CC47A;			
+		}
+        textarea {
+            white-space: pre-wrap;
+        }
+	</style>
+</head>
+<body>
+    <div id="wrap-showtexts"></div>
+    <div id="msgbox" class="msgbox"></div>
+    <div id="wrap-input">
+		<textarea type="text" id="getText" placeholder="Enter your text"></textarea><br>
+		<div align="right">
+			<button OnClick="submitText()">Save</button>
+		</div>
+	</div>
+	<!-- <div class="copyright">
+		&copy; 2020 Akhzar Farhan
+	</div> -->
+</body>
+<script>
+		var allTexts=[]
+		function submitText(){
+				var text=document.getElementById('getText').value
+				var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender": navigator.userAgent.toString().slice(0,7)}
+				axios.post('https://texter-for-me.firebaseio.com/text.json',senddata).then(function(res){
+						document.getElementById('msgbox').innerHTML="Message Sent"
+                        document.getElementById('getText').value=""
+				})
+		}
+		window.onload=getText()
+		function getText(){
+				axios.get('https://texter-for-me.firebaseio.com/text.json').then(function(res){
+						allTexts=[]
+						for(let key in res.data){
+							res.data.id=key;
+							allTexts.push(res.data[key])
+						}
+						// allTexts.reverse()
+				}).then(function(){
+					for( let  i in allTexts){
+							var elem=document.createElement('div')
+								elem.setAttribute('id','box'+i)
+								elem.setAttribute('class','box')
+								elem.innerHTML=allTexts[i].text
+								document.getElementById('wrap-showtexts').appendChild(elem)
+                            var elem2=document.createElement('div')
+								elem2.setAttribute('class','date')
+								elem2.innerHTML=allTexts[i].date + " " + allTexts[i].sender
+								document.getElementById('wrap-showtexts').appendChild(elem2)					
+					}
+				})
+		}
+</script>
+</html>
