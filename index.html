@@ -121,7 +121,7 @@
 		}
 		window.onload=getText()
 		function getText(){
-				axios.get('https://texter-for-me.firebaseio.com/text.json').then(function(res){
+				axios.get('https://texter-for-me.firebaseio.com/text.json?orderBy=%22$key%22&limitToLast=10').then(function(res){
 						allTexts=[]
 						for(let key in res.data){
 							res.data.id=key;
