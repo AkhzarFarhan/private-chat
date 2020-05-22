@@ -123,7 +123,7 @@
 	window.onload=getText()
 	function getText(){
 		axios.get('https://texter-for-me.firebaseio.com/text.json?orderBy=%22$key%22&limitToLast=5').then(function(res){
-			allTexts=[]
+			var allTexts=[]
 			for(let key in res.data){
 				res.data.id=key;
 				allTexts.push(res.data[key])
