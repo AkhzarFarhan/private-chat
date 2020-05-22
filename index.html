@@ -56,6 +56,7 @@
 					elem.innerHTML=allTexts[i].text
 					document.getElementById('wrap-showtexts').appendChild(elem)
 				var elem2=document.createElement('div')
+					elem2.setAttribute('id', 'date'+i)
 					elem2.setAttribute('class','date')
 					elem2.innerHTML=allTexts[i].date + " " + allTexts[i].sender
 					document.getElementById('wrap-showtexts').appendChild(elem2)					
@@ -64,8 +65,16 @@
 		})
 	}
 	function deleteBox() {
-		var elem = document.getElementById('box0')
-		elem.remove();
+		document.getElementById('box0').remove();
+		document.getElementById('date0').remove();
+		document.getElementById('box1').remove();
+		document.getElementById('date1').remove();
+		document.getElementById('box2').remove();
+		document.getElementById('date2').remove();
+		document.getElementById('box3').remove();
+		document.getElementById('date3').remove();
+		document.getElementById('box4').remove();
+		document.getElementById('date4').remove();
 	}
 </script>
 </html>
