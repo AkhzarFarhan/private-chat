@@ -111,7 +111,7 @@
 		var allTexts=[]
 		function submitText(){
 				var text=document.getElementById('getText').value
-				var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender": screen.height.toString()}
+				var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender":private_key}
 				axios.post('https://texter-for-me.firebaseio.com/text.json',senddata).then(function(res){
 						// document.getElementById('msgbox').innerHTML="Message Sent"
                         document.getElementById('getText').value=""
@@ -121,7 +121,8 @@
 		}
 		window.onload=getText()
 		function getText(){
-				axios.get('https://texter-for-me.firebaseio.com/text.json?orderBy=%22$key%22&limitToLast=10').then(function(res){
+				var private_key = window.prompt("Please Enter Private Key")
+				axios.get('https://texter-for-me.firebaseio.com/text.json?orderBy=%22$key%22&limitToLast=5').then(function(res){
 						allTexts=[]
 						for(let key in res.data){
 							res.data.id=key;
