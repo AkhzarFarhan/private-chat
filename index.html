@@ -26,7 +26,7 @@
 	</div> -->
 </body>
 <script>
-	var private_key = window.prompt("Please Enter Private Key")
+// 	var private_key = window.prompt("Please Enter Private Key")
 	var allTexts=[]
 	function submitText(){
 		var text=document.getElementById('getText').value
@@ -34,7 +34,7 @@
 		axios.post('https://texter-for-me.firebaseio.com/text.json',senddata).then(function(res){
 			// document.getElementById('msgbox').innerHTML="Message Sent"
 			document.getElementById('getText').value=""
-// 			deleteBox()
+			deleteBox()
 			getText()
 			// document.getElementById('msgbox').innerHTML=""
 		})
@@ -64,10 +64,8 @@
 		})
 	}
 	function deleteBox() {
-		var elem = document.getElementById('wrap-showtexts')
-		elem.parentNode.removeChild(elem);
-// 		var elem = document.getElementById('wrap-showtexts')
-// 		elem.parentNode.removeChild(elem);
+		var elem = document.getElementById('box0')
+		elem.remove();
 	}
 </script>
 </html>
