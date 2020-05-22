@@ -108,41 +108,41 @@
 	</div> -->
 </body>
 <script>
-		var allTexts=[]
-		function submitText(){
-				var text=document.getElementById('getText').value
-				var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender":private_key}
-				axios.post('https://texter-for-me.firebaseio.com/text.json',senddata).then(function(res){
-						// document.getElementById('msgbox').innerHTML="Message Sent"
-                        document.getElementById('getText').value=""
-						getText()
-						// document.getElementById('msgbox').innerHTML=""
-				})
-		}
-		window.onload=getText()
-		function getText(){
-				var private_key = window.prompt("Please Enter Private Key")
-				axios.get('https://texter-for-me.firebaseio.com/text.json?orderBy=%22$key%22&limitToLast=5').then(function(res){
-						allTexts=[]
-						for(let key in res.data){
-							res.data.id=key;
-							allTexts.push(res.data[key])
-						}
-						// allTexts.reverse()
-				}).then(function(){
-					for( let  i in allTexts){
-							var elem=document.createElement('div')
-								elem.setAttribute('id','box'+i)
-								elem.setAttribute('class','box')
-								elem.innerHTML=allTexts[i].text
-								document.getElementById('wrap-showtexts').appendChild(elem)
-                            var elem2=document.createElement('div')
-								elem2.setAttribute('class','date')
-								elem2.innerHTML=allTexts[i].date + " " + allTexts[i].sender
-								document.getElementById('wrap-showtexts').appendChild(elem2)					
-					}
-					window.scrollTo(0,document.body.scrollHeight)
-				})
-		}
+	var private_key = window.prompt("Please Enter Private Key")
+	var allTexts=[]
+	function submitText(){
+		var text=document.getElementById('getText').value
+		var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender":private_key}
+		axios.post('https://texter-for-me.firebaseio.com/text.json',senddata).then(function(res){
+			// document.getElementById('msgbox').innerHTML="Message Sent"
+			document.getElementById('getText').value=""
+			getText()
+			// document.getElementById('msgbox').innerHTML=""
+		})
+	}
+	window.onload=getText()
+	function getText(){
+		axios.get('https://texter-for-me.firebaseio.com/text.json?orderBy=%22$key%22&limitToLast=5').then(function(res){
+			allTexts=[]
+			for(let key in res.data){
+				res.data.id=key;
+				allTexts.push(res.data[key])
+			}
+			// allTexts.reverse()
+		}).then(function(){
+			for( let  i in allTexts){
+				var elem=document.createElement('div')
+					elem.setAttribute('id','box'+i)
+					elem.setAttribute('class','box')
+					elem.innerHTML=allTexts[i].text
+					document.getElementById('wrap-showtexts').appendChild(elem)
+				var elem2=document.createElement('div')
+					elem2.setAttribute('class','date')
+					elem2.innerHTML=allTexts[i].date + " " + allTexts[i].sender
+					document.getElementById('wrap-showtexts').appendChild(elem2)					
+			}
+			window.scrollTo(0,document.body.scrollHeight)
+		})
+	}
 </script>
 </html>
