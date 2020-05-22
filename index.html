@@ -111,11 +111,12 @@
 		var allTexts=[]
 		function submitText(){
 				var text=document.getElementById('getText').value
-				var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender": navigator.productSub.toString()}
+				var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender": screen.pixelDepth.toString()}
 				axios.post('https://texter-for-me.firebaseio.com/text.json',senddata).then(function(res){
 						document.getElementById('msgbox').innerHTML="Message Sent"
                         document.getElementById('getText').value=""
 						getText()
+						document.getElementById('msgbox').innerHTML=""
 				})
 		}
 		window.onload=getText()
