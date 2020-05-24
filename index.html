@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <head>
 	<meta charset="utf-8">
@@ -29,25 +30,29 @@
 	function submitText(){
 		var text=document.getElementById('getText').value
 		var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender":username}
-		axios.post('https://myp-chat.firebaseio.com/chat.json',senddata).then(function(res){
+		axios.post(window.value.toString().slice(0,41),senddata).then(function(res){
 			// document.getElementById('msgbox').innerHTML="Message Sent"
 			document.getElementById('getText').value=""
-			getText()
+			getText(window.value)
 			// document.getElementById('msgbox').innerHTML=""
 		})
 	}
 	window.onload=getEurl()
 	function getEurl(){
 		var url = 'https://script.google.com/macros/s/AKfycbzxWw-sFLslbSCCOYxwculKb4JAZGd4sUjUXPZY2GvpJFKoFf4/exec'
-		console.log("I am here", axios.get(url))
+		fetch(url).then(response => response.text())
+		.then(data => {
+			// console.log(data)
+			window.value = data
+			getText(data)
+		});
 	}
-	function getText(){
+	function getText(eurl){
 		var allTexts=[]
-		var eurl = getEurl()
-		console.log(eurl)
-		axios.get(eurl).then(function(res){
+		// console.log(eurl)
+		fetch(eurl).then(function(res){
 			allTexts=[]
-			console.log(r.data)
+			console.log('res is: ', res)
 			for(let key in res.data){
 				res.data.id=key;
 				allTexts.push(res.data[key])
