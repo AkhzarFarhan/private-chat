@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <head>
 	<meta charset="utf-8">
@@ -12,7 +12,7 @@
     <div id="wrap-showtexts"></div>
     <div id="msgbox" class="msgbox"></div>
     <div id="wrap-input">
-		<textarea type="text" id="getText" placeholder="Enter your text"></textarea><br><br>
+		<textarea type="text" id="getText" placeholder="Enter your text"></textarea></br></br>
 		<div class="flex-button">
 			<button OnClick="getText()">Refresh</button>
 			<button OnClick="submitText()">Send</button>
@@ -36,36 +36,35 @@
 			// document.getElementById('msgbox').innerHTML=""
 		})
 	}
-	window.onload=getText()
+	window.onload=getEurl()
+	function getEurl(){
+		var url = 'https://script.google.com/macros/s/AKfycbzxWw-sFLslbSCCOYxwculKb4JAZGd4sUjUXPZY2GvpJFKoFf4/exec'
+		console.log("I am here", axios.get(url))
+	}
 	function getText(){
 		var allTexts=[]
-		var url = 'https://myp-chat.firebaseio.com/chat.json?orderBy="$key"&limitToLast=5'
-		var url2 = 'https://script.google.com/macros/s/AKfycbzxWw-sFLslbSCCOYxwculKb4JAZGd4sUjUXPZY2GvpJFKoFf4/exec'
-		var uid = {
-			"provider": "anonymous",
-			"uid": "1"
-		}
-		axios.get(url2).then(function(res){
+		var eurl = getEurl()
+		console.log(eurl)
+		axios.get(eurl).then(function(res){
 			allTexts=[]
+			console.log(r.data)
 			for(let key in res.data){
 				res.data.id=key;
 				allTexts.push(res.data[key])
 			}
 			// allTexts.reverse()
-		}).then(function(res){
+		}).then(function(){
 			for( let  i in allTexts){
 				var elem=document.createElement('div')
 					elem.setAttribute('id','box'+i)
 					elem.setAttribute('class','box')
-					// elem.innerHTML=allTexts[i].text
-					elem.innerHTML=res
+					elem.innerHTML=allTexts[i].text
 					document.getElementById('wrap-showtexts').appendChild(elem)
 				var elem2=document.createElement('div')
 					elem2.setAttribute('class','date')
 					elem2.innerHTML=allTexts[i].date + " " + allTexts[i].sender
 					document.getElementById('wrap-showtexts').appendChild(elem2)					
 			}
-			allTexts=[]
 			window.scrollTo(0,document.body.scrollHeight)
 		})
 	}
