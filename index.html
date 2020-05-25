@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <head>
 	<meta charset="utf-8">
 	<title>Private Chat</title>
 	<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
 	<link href="index.css" rel="stylesheet">
-<!-- 	<style>
-        
-	</style> -->
 </head>
 <body>
     <div id="wrap-showtexts"></div>
     <div id="msgbox" class="msgbox"></div>
     <div id="wrap-input">
-		<textarea type="text" id="getText" placeholder="Enter your text"></textarea><br><br>
+		<textarea type="text" id="getText" placeholder="Enter your text"></textarea></br></br>
 		<div class="flex-button">
-			<button OnClick="getText()">Refresh</button>
+			<button OnClick="getText(window.value)">Refresh</button>
 			<button OnClick="submitText()">Send</button>
 		</div>
 	</div>
@@ -26,28 +24,52 @@
 	</div> -->
 </body>
 <script>
-// 	var private_key = window.prompt("Please Enter Private Key")
-	var private_key = "1"
-	var allTexts=[]
+
+	var username = window.prompt("Please Enter Username")
+
 	function submitText(){
 		var text=document.getElementById('getText').value
-		var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender":private_key}
-		axios.post('https://texter-for-me.firebaseio.com/text.json',senddata).then(function(res){
+		var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender":username}
+		axios.post(window.value.toString().slice(0,41),senddata).then(function(res){
 			// document.getElementById('msgbox').innerHTML="Message Sent"
 			document.getElementById('getText').value=""
-			getText()
+			getText(window.value)
 			deleteBox()
 			// document.getElementById('msgbox').innerHTML=""
 		})
 	}
-	window.onload=getText()
-	function getText(){
-		axios.get('https://texter-for-me.firebaseio.com/text.json?orderBy=%22$key%22&limitToLast=5').then(function(res){
+	window.onload=getEurl()
+	function getEurl(){
+		var key = window.prompt("Please Enter Private Key")
+		// var key = '123'
+		var url = `https://script.google.com/macros/s/AKfycbzxWw-sFLslbSCCOYxwculKb4JAZGd4sUjUXPZY2GvpJFKoFf4/exec?key=${key}`
+		fetch(url).then(response => response.json())
+		.then(data => {
+			console.log(data['url'])
+			window.value = data['url']
+			getText(data['url'])
+		});
+	}
+	function getText(eurl){
+		var allTexts=[]
+		// fetch(eurl).then(response => response.json())
+		// .then(response => {
+		// 	console.log('response', response)
+		// 	allTexts = []
+		// 	for(let key in response.data) {
+		// 		response.data.id = key
+		// 		allTexts.push(response.data[key])
+		// 	}
+			// console.log(allTexts)
+		// })
+		// console.log(allTexts)
+		axios.get(eurl).then(function(res){
 			allTexts=[]
 			for(let key in res.data){
 				res.data.id=key;
 				allTexts.push(res.data[key])
 			}
+			// console.log('allTexts: ', allTexts)
 			// allTexts.reverse()
 		}).then(function(){
 			for( let  i in allTexts){
