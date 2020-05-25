@@ -24,9 +24,9 @@
 	</div> -->
 </body>
 <script>
+
 	var username = window.prompt("Please Enter Username")
-	// var private_key = window.prompt("Please Enter Private Key")
-	// var username = 'das'
+
 	function submitText(){
 		var text=document.getElementById('getText').value
 		var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender":username}
@@ -34,6 +34,7 @@
 			// document.getElementById('msgbox').innerHTML="Message Sent"
 			document.getElementById('getText').value=""
 			getText(window.value)
+			deleteBox()
 			// document.getElementById('msgbox').innerHTML=""
 		})
 	}
@@ -78,12 +79,25 @@
 					elem.innerHTML=allTexts[i].text
 					document.getElementById('wrap-showtexts').appendChild(elem)
 				var elem2=document.createElement('div')
+					elem2.setAttribute('id', 'date'+i)
 					elem2.setAttribute('class','date')
 					elem2.innerHTML=allTexts[i].date + " " + allTexts[i].sender
 					document.getElementById('wrap-showtexts').appendChild(elem2)					
 			}
 			window.scrollTo(0,document.body.scrollHeight)
 		})
+	}
+	function deleteBox() {
+		document.getElementById('box0').remove();
+		document.getElementById('date0').remove();
+		document.getElementById('box1').remove();
+		document.getElementById('date1').remove();
+		document.getElementById('box2').remove();
+		document.getElementById('date2').remove();
+		document.getElementById('box3').remove();
+		document.getElementById('date3').remove();
+		document.getElementById('box4').remove();
+		document.getElementById('date4').remove();
 	}
 </script>
 </html>
