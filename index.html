@@ -15,7 +15,7 @@
     <div id="wrap-input">
 		<textarea type="text" id="getText" placeholder="Enter your text"></textarea></br></br>
 		<div class="flex-button">
-			<button OnClick="getText()">Refresh</button>
+			<button OnClick="getText(window.value)">Refresh</button>
 			<button OnClick="submitText()">Send</button>
 		</div>
 	</div>
@@ -24,9 +24,9 @@
 	</div> -->
 </body>
 <script>
-	// var username = window.prompt("Please Enter Username")
+	var username = window.prompt("Please Enter Username")
 	// var private_key = window.prompt("Please Enter Private Key")
-	var username = 'das'
+	// var username = 'das'
 	function submitText(){
 		var text=document.getElementById('getText').value
 		var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender":username}
@@ -39,24 +39,36 @@
 	}
 	window.onload=getEurl()
 	function getEurl(){
-		var url = 'https://script.google.com/macros/s/AKfycbzxWw-sFLslbSCCOYxwculKb4JAZGd4sUjUXPZY2GvpJFKoFf4/exec'
-		fetch(url).then(response => response.text())
+		var key = window.prompt("Please Enter Private Key")
+		// var key = '123'
+		var url = `https://script.google.com/macros/s/AKfycbzxWw-sFLslbSCCOYxwculKb4JAZGd4sUjUXPZY2GvpJFKoFf4/exec?key=${key}`
+		fetch(url).then(response => response.json())
 		.then(data => {
-			// console.log(data)
-			window.value = data
-			getText(data)
+			console.log(data['url'])
+			window.value = data['url']
+			getText(data['url'])
 		});
 	}
 	function getText(eurl){
 		var allTexts=[]
-		// console.log(eurl)
-		fetch(eurl).then(function(res){
+		// fetch(eurl).then(response => response.json())
+		// .then(response => {
+		// 	console.log('response', response)
+		// 	allTexts = []
+		// 	for(let key in response.data) {
+		// 		response.data.id = key
+		// 		allTexts.push(response.data[key])
+		// 	}
+			// console.log(allTexts)
+		// })
+		// console.log(allTexts)
+		axios.get(eurl).then(function(res){
 			allTexts=[]
-			console.log('res is: ', res)
 			for(let key in res.data){
 				res.data.id=key;
 				allTexts.push(res.data[key])
 			}
+			// console.log('allTexts: ', allTexts)
 			// allTexts.reverse()
 		}).then(function(){
 			for( let  i in allTexts){
