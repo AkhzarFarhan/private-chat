@@ -15,7 +15,7 @@
     <div id="wrap-input">
 		<textarea type="text" id="getText" placeholder="Your text here"></textarea></br></br>
 		<div class="flex-button">
-			<button OnClick="getText(window.value[0])">Refresh</button>
+			<button OnClick="refresh()">Refresh</button>
 			<button OnClick="submitText()">Send</button>
 		</div>
 	</div>
@@ -26,6 +26,11 @@
 <script>
 
 	var username = window.prompt("Please Enter Username")
+
+	function refresh() {
+		window.value[1] = 'old'
+		getText(window.value[0])
+	}
 
 	function submitText(){
 		var text=document.getElementById('getText').value
