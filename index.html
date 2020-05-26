@@ -13,9 +13,9 @@
     <div id="wrap-showtexts"></div>
     <div id="msgbox" class="msgbox"></div>
     <div id="wrap-input">
-		<textarea type="text" id="getText" placeholder="Enter your text"></textarea></br></br>
+		<textarea type="text" id="getText" placeholder="Your text here"></textarea></br></br>
 		<div class="flex-button">
-			<button OnClick="getText(window.value)">Refresh</button>
+			<button OnClick="getText(window.value[0])">Refresh</button>
 			<button OnClick="submitText()">Send</button>
 		</div>
 	</div>
@@ -33,44 +33,30 @@
 		axios.post(window.value.toString().slice(0,41),senddata).then(function(res){
 			// document.getElementById('msgbox').innerHTML="Message Sent"
 			document.getElementById('getText').value=""
-			getText(window.value)
-			deleteBox()
+			window.value[1] = 'old'
+			getText(window.value[0])
 			// document.getElementById('msgbox').innerHTML=""
 		})
 	}
 	window.onload=getEurl()
 	function getEurl(){
 		var key = window.prompt("Please Enter Private Key")
-		// var key = '123'
 		var url = `https://script.google.com/macros/s/AKfycbzxWw-sFLslbSCCOYxwculKb4JAZGd4sUjUXPZY2GvpJFKoFf4/exec?key=${key}`
 		fetch(url).then(response => response.json())
 		.then(data => {
 			console.log(data['url'])
-			window.value = data['url']
+			window.value = [data['url'], 'new']
 			getText(data['url'])
 		});
 	}
 	function getText(eurl){
 		var allTexts=[]
-		// fetch(eurl).then(response => response.json())
-		// .then(response => {
-		// 	console.log('response', response)
-		// 	allTexts = []
-		// 	for(let key in response.data) {
-		// 		response.data.id = key
-		// 		allTexts.push(response.data[key])
-		// 	}
-			// console.log(allTexts)
-		// })
-		// console.log(allTexts)
 		axios.get(eurl).then(function(res){
 			allTexts=[]
 			for(let key in res.data){
 				res.data.id=key;
 				allTexts.push(res.data[key])
 			}
-			// console.log('allTexts: ', allTexts)
-			// allTexts.reverse()
 		}).then(function(){
 			for( let  i in allTexts){
 				var elem=document.createElement('div')
@@ -85,6 +71,9 @@
 					document.getElementById('wrap-showtexts').appendChild(elem2)					
 			}
 			window.scrollTo(0,document.body.scrollHeight)
+			if(window.value[1] == 'old') {
+				deleteBox()
+			}
 		})
 	}
 	function deleteBox() {
