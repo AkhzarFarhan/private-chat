@@ -49,7 +49,10 @@
 		var url = `https://script.google.com/macros/s/AKfycbzxWw-sFLslbSCCOYxwculKb4JAZGd4sUjUXPZY2GvpJFKoFf4/exec?key=${key}`
 		fetch(url).then(response => response.json())
 		.then(data => {
-			console.log(data['url'])
+			console.log(data['error'])
+			if(data['error'] == 'y') {
+				document.location = 'access_denied.html'
+			}
 			window.value = [data['url'], 'new']
 			getText(data['url'])
 		});
