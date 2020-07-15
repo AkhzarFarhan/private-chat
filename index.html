@@ -35,7 +35,8 @@
 	function submitText(){
 		var text=document.getElementById('getText').value
 		var senddata={"text":text, "date":Date().toString().slice(4, 24), "sender":username}
-		axios.post(window.value.toString().slice(0,41),senddata).then(function(res){
+        console.log("window.value: ", window.value[0].toString().slice(0, 54));
+		axios.post(window.value[0].toString().slice(0, 54), senddata).then(function(res){
 			// document.getElementById('msgbox').innerHTML="Message Sent"
 			document.getElementById('getText').value=""
 			window.value[1] = 'old'
